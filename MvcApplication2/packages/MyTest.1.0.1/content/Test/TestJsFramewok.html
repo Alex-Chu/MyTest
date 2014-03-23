@@ -1,0 +1,998 @@
+﻿<!DOCTYPE html>   
+<html ng-app>   
+<head>   
+      <title>jsFiddle-=== ClientFramework測試 ===</title>
+      <META HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
+      <META HTTP-EQUIV="Expires" CONTENT="-1"> 
+      <meta charset="utf-8">
+
+      <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    
+      <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+      <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+      <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+
+      <link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.common.min.css">
+      <link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2013.3.1119/styles/kendo.default.min.css">
+
+      <link href="http://cdn.bootcss.com/file-uploader/3.7.0/fineuploader.css" rel="stylesheet"/>
+
+      <link rel="stylesheet" type="text/css" href="http://dev.jquery.com/view/trunk/plugins/tooltip/jquery.tooltip.css" />
+
+      <!--<link rel="stylesheet" type="text/css" href="https://sites.google.com/site/realilsticartist/panorama.css" />-->
+
+
+      <script type='text/javascript' src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+      <script type='text/javascript' src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+      <script type='text/javascript' src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script> 
+      
+      <script type='text/javascript' src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js"></script>
+     <!-- <script type='text/javascript'src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.web.min.js"></script>--> 
+
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script> 
+
+      <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script> 
+     <!-- <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/cmxforms.min.js"></script> -->
+
+     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.66.0-2013.10.09/jquery.blockUI.min.js"></script>  
+
+     <script src="http://code.highcharts.com/highcharts.js"></script>
+     <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.49/jquery.form.min.js"></script> 
+
+     <script src="https://jquery-xml2json-plugin.googlecode.com/svn/trunk/jquery.xml2json.js" type="text/javascript" ></script>
+
+    <script src="http://yandex.st/json2/2011-10-19/json2.min.js" type="text/javascript" ></script>
+
+    <script src="http://cdn.bootcss.com/linq.js/2.2.0.2/linq.min.js"></script>
+   <!-- <script src="http://cdn.bootcss.com/linq.js/2.2.0.2/jquery.linq.min.js"></script>-->
+
+    <script src="http://cdn.bootcss.com/file-uploader/3.7.0/fineuploader.min.js"></script>
+    <!--<script src="http://cdn.bootcss.com/Cookies.js/0.3.1/cookies.min.js"></script>-->
+
+    <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/tooltip/jquery.tooltip.js"></script>
+
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-url-parser/2.3.1/purl.min.js"></script>
+
+    <script type="text/javascript" src="http://skylightdev.net/panorama/jquery.panorama.min.js"></script>
+<style>
+/*.k-grouping-row { display: none; }
+.k-grid .k-group-col { display: none; }
+th.k-group-cell, td.k-group-cell { display: none; }*/
+</style>                 
+      
+<script type='text/javascript'>//<![CDATA[ 
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // jQueryEasyUI(progressbar) & BlockUI
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    $(function () {
+        var value = 0;
+
+        function start() {
+            if (value < 100) {
+                value += Math.floor(Math.random() * 10);
+                $('#p').progressbar('setValue', value);
+                setTimeout(arguments.callee, 200);
+            }
+            else {
+                $('#commentForm').unblock();
+            }
+
+        }
+
+        (function test() {
+            $("#MyTest2").bind('click', function () {
+                //value = $('#p').progressbar('getValue');
+                value = 0;
+                start();
+
+                $("#commentForm").block({ message: '<b><i>處理中 , 請稍後</i>...</b>', css: { opacity: .99 } });
+            });
+        })();
+    });
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Kendo UI------DateTimePicker
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        $(document).ready(function () {
+            // create DateTimePicker from input HTML element
+            $("#datetimepicker").kendoDateTimePicker({
+                value: new Date()
+            });
+        });
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // jQueryEasyUI------ComboBox
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        $(function () {
+            $('#cc').combo({
+                required: true,
+                editable: false
+            });
+            $('#sp').appendTo($('#cc').combo('panel'));
+            $('#sp input').click(function () {
+                var v = $(this).val();
+                var s = $(this).next('span').text();
+                $('#cc').combo('setValue', v).combo('setText', s).combo('hidePanel');
+            });
+        });
+
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // ValidateJS
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        $(document).ready(function () {
+
+            $('#commentForm').validate();
+        });
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // BlockUI
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        function ShowBlock() {
+            //alert('完成!');
+            //$.blockUI();
+            /*
+            $.blockUI({ css: {
+             border: 'none',
+             padding: '15px',
+             backgroundColor: '#000',
+             '-webkit-border-radius': '10px',
+             '-moz-border-radius': '10px',
+             opacity: .5,
+             color: '#fff'
+            } });
+           setTimeout($.unblockUI, 2000);
+           */
+
+           var countdown = 3;  
+           //$.blockUI({ message: '3' });  
+           ShowMsg(countdown) ;
+           var interval = setInterval(function() {  
+               if (--countdown <= 0) {  
+               $.unblockUI();  
+                 clearInterval(interval);  
+               } 
+               else {  
+                 //$.blockUI({ message: countdown });  
+                 ShowMsg(countdown) ;
+               }  
+             }, 1000);  
+        }
+
+        function ShowMsg(Msg) {
+            $.blockUI({
+                message: '<h1>6.BlockUI 倒數...' + Msg + '<h1>',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    color: '#000',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                }
+            });
+        }
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Highcharts
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        $(function () {
+            // Chart1 ----------------------------------------------------------------------------------------------------------------------------------B
+            var MakeChart1 = function () {
+                $('#container').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: 'Browser market shares at a specific website, 2010'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                color: '#000000',
+                                connectorColor: '#000000',
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                            }
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Browser share',
+                        data: [
+                            ['Firefox', 45.0],
+                            ['IE', 26.8],
+                            {
+                                name: 'Chrome',
+                                y: 12.8,
+                                sliced: true,
+                                selected: true
+                            },
+                            ['Safari', 8.5],
+                            ['Opera', 6.2],
+                            ['Others', 0.7]
+                        ]
+                    }]
+                });
+            } // MakeChart1()
+
+            MakeChart1();
+
+            $('#mytabs a:eq(2)').on('click', function (e) {
+                //alert('test');
+                //MakeChart1();
+            });
+            // Chart1 ----------------------------------------------------------------------------------------------------------------------------------B
+
+            // Chart2 ----------------------------------------------------------------------------------------------------------------------------------B
+            var MakeChart2 = function () {
+                $('#container2').highcharts({
+                    title: {
+                        text: 'Monthly Average Temperature',
+                        x: -20 //center
+                    },
+                    subtitle: {
+                        text: 'Source: WorldClimate.com',
+                        x: -20
+                    },
+                    xAxis: {
+                        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Temperature (°C)'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    tooltip: {
+                        valueSuffix: '°C'
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        borderWidth: 0
+                    },
+                    series: [{
+                        name: 'Tokyo',
+                        data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                    }, {
+                        name: 'New York',
+                        data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+                    }, {
+                        name: 'Berlin',
+                        data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+                    }, {
+                        name: 'London',
+                        data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                    }]
+                });
+            } // MakeChart2()
+
+            MakeChart2();
+
+            $('#mytabs a:eq(3)').on('click', function (e) {
+                //alert('test2');
+                MakeChart2();
+            });
+            // Chart2 ----------------------------------------------------------------------------------------------------------------------------------E
+
+            // Chart3 ----------------------------------------------------------------------------------------------------------------------------------B
+            var MakeChart3 = function () {
+                $('#container3').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Column chart with negative values'
+                    },
+                    xAxis: {
+                        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: 'John',
+                        data: [5, 3, 4, 7, 2]
+                    }, {
+                        name: 'Jane',
+                        data: [2, -2, -3, 2, 1]
+                    }, {
+                        name: 'Joe',
+                        data: [3, 4, 4, -2, 5]
+                    }]
+                });
+            } // MakeChart3()
+
+            MakeChart3();
+
+            $('#mytabs a:eq(4)').on('click', function (e) {
+                //alert('test3');
+                MakeChart3();
+            });
+            // Chart3 ----------------------------------------------------------------------------------------------------------------------------------E
+        });
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // FormJS + Xml2Json + Json2 + LinqJS + FineUploader
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        $(function () {
+            //===========================================================================================================================================
+            // 1. FormJS
+            //===========================================================================================================================================
+            $("#btnClr").bind('click', function () {
+                $('#myFormId').clearForm();
+            });
+
+            $("#btnOk").bind('click', function () {
+                //$('#myFormId').resetForm(); 
+                //alert($('#myFormId2').formSerialize());
+                alert($('#myFormId2 input:lt(2)').fieldSerialize());
+            });
+            //===========================================================================================================================================
+            // 2. Xml2Json
+            //===========================================================================================================================================
+            $("#btnOk2").bind('click', function () {
+                /*
+                //var MyUrl = 'http://www.fyneworks.com/jquery/xml-to-json/data/notes.xml'; // Cross Domain 會 Error
+                var MyUrl = 'notes.xml';
+                $.ajax({
+                    url: MyUrl,
+                    type: 'get',
+                    dataType: 'xml',
+                    timeout: 1000,
+                    error: function (request, status, error) {
+                        //alert('Error loading XML document');
+                        //alert(request.status);
+                        alert(status);
+                    },
+                    success: function (xml) {
+                        var animals = $.xml2json(xml);
+                        //alert(animals.dog[1].name + '/' + animals.dog[1]);
+                        alert(animals.dog[0].name + '/' + animals.dog[0].breed);
+                    }
+                });
+                */
+
+                var MyXmL = '<animals> <dog color="Black"> <name>Rufus</name> <breed>labrador</breed> </dog> <dog breed="whippet"> Adopted <name>Marty</name> </dog> <cat color="White"> <name>Matilda</name> </cat> </animals>';
+                var xmlDoc = $.parseXML(MyXmL);
+                var animals = $.xml2json(xmlDoc);
+                var Xml2JsonResult = '';
+                Xml2JsonResult += '=== xml2json ===';
+                Xml2JsonResult += '\n\n' + animals.dog[0].name + '/' + animals.dog[0].breed;
+                Xml2JsonResult += '\n' + animals.dog[1].name + '/' + animals.dog[1];
+                alert(Xml2JsonResult);
+            });
+            //===========================================================================================================================================
+            // 3. Json2
+            //===========================================================================================================================================
+            $("#btnOk3").bind('click', function () {
+                /*
+                //var MyUrl = 'http://www.fyneworks.com/jquery/xml-to-json/data/notes.xml'; // Cross Domain 會 Error
+                var MyUrl = 'notes.xml';
+                $.ajax({
+                    url: MyUrl,
+                    type: 'get',
+                    dataType: 'xml',
+                    timeout: 1000,
+                    error: function (request, status, error) {
+                        //alert('Error loading XML document');
+                        //alert(request.status);
+                        alert(status);
+                    },
+                    success: function (xml) {
+                        var animals = $.xml2json(xml);
+                        //alert(animals.dog[1].name + '/' + animals.dog[1]);
+                        alert(animals.dog[0].name + '/' + animals.dog[0].breed);
+                    }
+                });
+                */
+
+                var MyXmL = '<animals> <dog color="Black"> <name>Rufus</name> <breed>labrador</breed> </dog> <dog breed="whippet"> Adopted <name>Marty</name> </dog> <cat color="White"> <name>Matilda</name> </cat> </animals>';
+                var xmlDoc = $.parseXML(MyXmL);
+                var animals = $.xml2json(xmlDoc);
+                var Xml2JsonResult = '';
+                Xml2JsonResult += '=== Json2 ===';
+                //---------------------------------------------------
+                var sAnimals = JSON.stringify(animals)  // 序列化
+                Xml2JsonResult += '\n\n' + 'a. 序列化' + sAnimals;
+                //---------------------------------------------------
+                animals = JSON.parse(sAnimals); // 反序列化
+                Xml2JsonResult += '\n\n' + 'b. 反序列化';
+                Xml2JsonResult += '\n' + animals.dog[0].name + '/' + animals.dog[0].breed;
+                Xml2JsonResult += '\n' + animals.dog[1].name + '/' + animals.dog[1];
+                //---------------------------------------------------
+                alert(Xml2JsonResult);
+            });
+            //===========================================================================================================================================
+            // 4. LinqJS
+            //===========================================================================================================================================
+            $("#btnOk4").bind('click', function () {
+                //-------------------------------------------------------------------------------------------------------------------------
+                var sMyTemp = '';
+                sMyTemp += '=== LinqJS (LINQ to JavaScript) ===' + '\n';
+                //-------------------------------------------------------------------------------------------------------------------------
+                // Sample1
+                sMyTemp += '\n' + 'A. 範例1';
+                Enumerable
+                    .Range(1, 10)
+                    .Where("i => i % 3 == 0")
+                    .Select("i => i * 10")
+                    .ForEach(function (value, index) {
+                        sMyTemp += '\n' + index + ". " + value;
+                    });
+                //-------------------------------------------------------------------------------------------------------------------------
+                // Sample2
+                sMyTemp += '\n\n' + 'B. 範例2';
+                var MyXmL = '<animals> <dog color="Black"> <name>Rufus</name> <breed>labrador</breed> </dog> <dog breed="whippet"> Adopted <name>Marty</name> </dog> <cat color="White"> <name>Matilda</name> </cat> </animals>';
+                var xmlDoc = $.parseXML(MyXmL);
+                var animals = $.xml2json(xmlDoc); //Xml2Json
+                var oanimals = Enumerable.From(animals)
+                    // 第一層
+                    .Where(function (x) {
+                        //return x.cat ? true : false;
+                        if (x.Key == 'cat') {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    })
+                    .OrderBy(function (x) { return x.Key })
+                    .Select(function (x) { return x })
+                    //.ToArray()                     
+                    .ForEach(function (value, index) {
+                        if (value) {
+                            sMyTemp += '\n' + index + ". " + JSON.stringify(value);
+                            Enumerable.From(value.Value)
+                                // 第二層
+                                //.Where(function (y) { return y.Key == 'name' })
+                                .OrderBy(function (y) { return y.Key })
+                                .Select(function (y) { return y.Key + '=' + y.Value })
+                                .ForEach(function (value2, index2) { sMyTemp += '\n(' + index2 + ") " + value2; });
+                        }
+                    });
+                oanimals = Enumerable.From(animals).Where(function (x) { return x.Key == 'cat' });
+                sMyTemp += '\n' + '總筆數:'+oanimals.Count();
+                //-------------------------------------------------------------------------------------------------------------------------
+                alert(sMyTemp);
+                //-------------------------------------------------------------------------------------------------------------------------
+            });
+            //===========================================================================================================================================
+            // 5. FineUploader
+            //===========================================================================================================================================
+            var manualuploader = new qq.FineUploader({
+                element: document.getElementById("manual-fine-uploader"),
+                request: {
+                    endpoint: 'http://www.cnblogs.com//halou/p/?' + 'reqType=addReportImage'
+                },
+                //autoUpload: true,
+                autoUpload: false,
+                multiple: true,
+                validation: {
+                    //allowedExtensions: ['jpeg', 'jpg', 'txt'],
+                    sizeLimit: 9999999 //bytes
+                },
+                text: {
+                    //uploadButton: '<i class="icon-plus icon-white"></i> 選擇檔案'
+                    uploadButton: '<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="btnOk2">選擇檔案 <span class="glyphicon glyphicon-hand-down"></span></button>'
+                },
+                callbacks: {
+                    onComplete: function (id, fileName, responseJSON) {
+                        //$(".qq-upload-list").html("");
+                        //reloadData
+                        //fetchShowImages(Cookies.get("resultReportId"));
+                    },
+                    onError: function (event, id, name, errorReason, xhrOrXdr) {
+                    },
+                },
+                debug: false
+            });
+
+
+            document.getElementById('triggerUpload').onclick = function () {
+                manualuploader.uploadStoredFiles();
+            };
+
+            document.getElementById('btnClear').onclick = function () {
+                manualuploader.clearStoredFiles();
+            };
+            //===========================================================================================================================================
+            // 6. TooltipJS
+            //===========================================================================================================================================
+            $("#btnOk4").tooltip({ content: "TooltipJS:LINQ to Javascript (前端資料處理)" });
+
+            $("input:text").attr("title", "TooltipJS-請輸入").tooltip({ showBody: "-" });
+            //===========================================================================================================================================
+            // 7. UrlJS
+            //===========================================================================================================================================
+            $("#btnOk5").tooltip({ content: "URL Parsing" });
+
+            $("#btnOk5").bind('click', function () {
+                var url = $.url("http://markdown.com:8443/awesome/language/markdown.html?show=all#top");
+                var sTempPars = '';
+                sTempPars += '=== jQuery.Url.Js ===';
+                sTempPars += '\n';
+                sTempPars += '\n' + '1.source: ' + url.attr('source');
+                sTempPars += '\n' + '2.protocol: ' + url.attr('protocol');
+                sTempPars += '\n' + '3.host: ' + url.attr('host');
+                sTempPars += '\n' + '4.port: ' + url.attr('port');
+                sTempPars += '\n' + '5.relative: ' + url.attr('relative');
+                sTempPars += '\n' + '6.path: ' + url.attr('path');
+                sTempPars += '\n' + '7.directory: ' + url.attr('directory');
+                sTempPars += '\n' + '8.file: ' + url.attr('file');
+                sTempPars += '\n' + '9.query: ' + url.attr('query');
+                sTempPars += '\n' + '10.fragment: ' + url.attr('fragment');
+                sTempPars += '\n' + '11.anchor: ' + url.attr('anchor');
+                alert(sTempPars);
+            });
+            //===========================================================================================================================================
+        });
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // panoramaJS
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        function StartPanoramaJS()
+        {
+            //START panorama            
+            $('#panorama').panorama({
+                speed: 500,
+                move: 500,
+                wheel: 2,
+                drag: 1,
+                attenuation: 3,
+                //viewport_width: 500,
+                // to display the true size of the image
+                //size:true,
+                fps: 60,
+                direction: 'left',
+                control_display: 'auto',
+                //auto_start: false,
+                loop_180: true
+            });
+
+            $('#panorama1').panorama({
+                speed: 500,
+                move: 500,
+                wheel: 2,
+                drag: 1,
+                attenuation: 3,
+                //viewport_width: 500,
+                // to display the true size of the image
+                //size:true,
+                fps: 60,
+                direction: 'left',
+                control_display: 'auto',
+                //auto_start: false,
+                loop_180: true
+            });
+
+            //START panorama            
+            $('#panorama2').panorama({
+                speed: 500,
+                move: 500,
+                wheel: 2,
+                drag: 1,
+                attenuation: 3,
+                //viewport_width: 500,
+                // to display the true size of the image
+                //size:true,
+                fps: 60,
+                direction: 'left',
+                control_display: 'auto',
+                //auto_start: false,
+                loop_180: true
+            });
+
+            //START panorama            
+            $('#panorama3').panorama({
+                speed: 500,
+                move: 500,
+                wheel: 2,
+                drag: 1,
+                attenuation: 3,
+                //viewport_width: 500,
+                // to display the true size of the image
+                //size:true,
+                fps: 60,
+                direction: 'left',
+                control_display: 'auto',
+                //auto_start: false,
+                loop_180: true
+            });
+            }
+        $(function () {
+            StartPanoramaJS();
+
+            $('#mytabs a:eq(6)').one('click', function (e) {
+                //alert('test2');
+                //StartPanoramaJS();
+            });
+        });
+   //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//]]>  
+
+</script>   
+<script type='text/javascript'>
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Kendo UI------Grid------ODATA
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    $(document).ready(function () {
+        $("#grid").kendoGrid({
+            dataSource: {
+                type: "odata",
+                transport: {
+                    read: "http://demos.kendoui.com/service/Northwind.svc/Customers"
+                },
+                pageSize: 5
+            },
+            groupable: true,
+            sortable: true,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            columns: [{
+                field: "ContactName",
+                title: "Contact Name",
+                width: 140
+            }, {
+                field: "ContactTitle",
+                title: "Contact Title",
+                width: 190
+            }, {
+                field: "CompanyName",
+                title: "Company Name"
+            }, {
+                field: "Country",
+                width: 110
+            }]
+        });
+    });
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Kendo UI------Grid------Group
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    $(function () {
+        var items = [
+        { Color: "Blue", Size: "L", Count: 1024 },
+        { Color: "Blue", Size: "M", Count: 256 },
+        { Color: "Blue", Size: "L", Count: 11024 },
+        { Color: "Blue", Size: "M", Count: 1256 },
+        { Color: "Blue", Size: "H", Count: 11024 },
+        { Color: "Blue", Size: "M", Count: 1256 },
+        { Color: "Red", Size: "M", Count: 16 },
+        { Color: "Red", Size: "S", Count: 8 }
+        ];
+        var ds = new kendo.data.DataSource({
+            data: items,
+            group: {
+                field: "Color", aggregates: [
+                { field: "Count", aggregate: "sum" }
+                ]
+            },
+            pageSize: 3
+        });
+        $("#grid2").kendoGrid({
+            sortable: true,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 3
+            },
+            columns: [
+            {
+                field: "Color",
+                groupHeaderTemplate: function (data) {
+                    //data.field = "Color", data.value = color_value
+                    groupColor = data.value; //store in global variable 
+                    return data.value;
+                },
+                groupFooterTemplate: "#= 'Subtotal (' + groupColor + ')'#"
+            },
+            { field: "Size" },
+            {
+                field: "Count",
+                groupFooterTemplate: "#=kendo.format('{0:n0}', sum)#"
+            }
+            ],
+            dataSource: ds
+        });
+    });
+    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+</script>            
+</head> 
+      
+<body>
+  <center>
+     <b style="color:navy;"><h2>--- 前端框架測試 ---</h2></b>
+     <br/>
+     <b style="color:orange;">jQuery</b>
+     <br/>
+     <b style="color:black;">+</b>
+  </center>
+  <center>   
+   <b style="color:red;">1.bootstrap</b>+<b style="color:green;">2.Kendo UI</b>+<b style="color:blue;">3.jQueryEasyUI</b>+<b style="color:maroon;">4.AngularJS</b>+<b style="color:hotpink;">5.ValidateJS </b>+<b style="color:gray;">6.BlockUI</b>
+      +<b style="color:darkviolet;">7.Highcharts</b>+<b style="color:orange;">8.FormJS</b>
+      +<b style="color:LightSalmon;">9.Xml2Json</b>+<b style="color:#FF6347;">10.Json2</b>
+      +<b style="color:#DC143C;">11.LinqJS</b>+<b style="color:#B22222;">12.FineUploader</b>
+      +<b style="color:#00FF00;">13.TooltipJS</b>+<b style="color:#9370DB;">14.UrlJS</b>
+      +<b style="color:#6495ED;">15.panoramaJS(全景)</b>
+  </center>
+  <div class="demo-info">
+    <div class="demo-tip icon-tip"></div>
+    <div>{{3232323  | date:'yyyy-MM-dd HH:MM:ss'}}</div>
+  </div>
+  <center> 
+    <form class="cmxform" id="commentForm" method="post" action="javascript:ShowBlock();">
+    <b style="color:red;">1.bootstrap: </b>
+    <input id='MyTest2' type='button' value='start' class="btn btn-large btn-primary">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label><b style="color:green;">2.Kendo UI: </b></label> 
+    <input id="datetimepicker" style="width:200px;" />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label><b style="color:blue;">3.jQueryEasyUI: </b></label> 
+    <select id="cc" style="width:150px"></select>
+    <div id="sp">
+       <div style="color:#99BBE8;background:#fafafa;padding:5px;">Select a language</div>
+       <input type="radio" name="lang" value="01"><span>Java</span><br/>
+       <input type="radio" name="lang" value="02"><span>C#</span><br/>
+       <input type="radio" name="lang" value="03"><span>Ruby</span><br/>
+       <input type="radio" name="lang" value="04"><span>Basic</span><br/>
+       <input type="radio" name="lang" value="05"><span>Fortran</span>
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label><b style="color:maroon;">4.AngularJS: </b></label>   
+    <input type="text" ng-model="yourName" minLength="2" maxLength="10"  class="required" >    {{yourName || '請輸入(必填,長度2~6)'}} 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label><b style="color:hotpink;">5.ValidateJS: </b></label> 
+    <input class="btn btn-large btn-danger submit" type="submit" value="送出"/>
+    </form>
+  </center>
+    <br />     
+    <b style="color:blue;">jQueryEasyUI (ProgressBar): </b>       
+    <div id="p" class="easyui-progressbar" style="width:90%x;"></div> 
+
+    <!--<br />-->
+
+    <b style="color:red;">bootstrap(頁籤) </b>
+    <div class="tabbable "> <!-- Only required for left/right tabs -->
+      <ul class="nav nav-tabs" id="mytabs">
+        <li><a href="#tab1" data-toggle="tab"><b style="color:green;">Kendo UI Grid</b> (ODATA)</a></li>
+        <li><a href="#tab2" data-toggle="tab"><b style="color:green;">Kendo UI Grid</b> (群組與小計)</a></li>
+        <li><a href="#tab3" data-toggle="tab"><b style="color:darkviolet;">Highcharts</b> (Pie)</a></li>
+        <li><a href="#tab4" data-toggle="tab"><b style="color:darkviolet;">Highcharts</b> (Line)</a></li>
+        <li><a href="#tab5" data-toggle="tab"><b style="color:darkviolet;">Highcharts</b> (Bar)</a></li>
+        <li><a href="#tab6" data-toggle="tab"><b style="color:red;">bootstrap</b> (<b style="color:orange;">FormJS</b>+<b style="color:LightSalmon;">Xml2Json</b>+<b style="color:#FF6347;">Json2</b>+<b style="color:#DC143C;">LinqJS</b>+<b style="color:#B22222;">FineUploader</b>+<b style="color:#00FF00;">TooltipJS</b>+<b style="color:#9370DB;">UrlJS</b>)</a></li>
+        <li><a href="#tab7" data-toggle="tab"><b style="color:#6495ED;">全景</b></a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane" id="tab1">
+            <br />     
+            <!--<b style="color:blue;">Kendo UI Grid (ODATA): </b>-->     
+            <center>
+             <div id='grid'></div>
+            </center>
+        </div>
+        <div class="tab-pane fade" id="tab2">
+             <br />     
+             <!--<b style="color:blue;">Kendo UI Grid (群組與小計): </b>    --> 
+             <div id='grid2'></div>
+        </div>
+        <div class="tab-pane active" id="tab3">
+            <!-- <br />  -->   
+             <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+        <div class="tab-pane" id="tab4">
+            <!-- <br />  -->   
+             <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+        <div class="tab-pane" id="tab5">
+            <!-- <br />  -->   
+             <div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+        <div class="tab-pane" id="tab6">
+            <!-- <br />  -->   
+           <div id="myFormId">
+                <nav class="navbar navbar-default" role="navigation">
+                  <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <a class="navbar-brand" href="#">Brand</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                      <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                      </form>
+                      <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </div><!-- /.navbar-collapse -->
+                  </div><!-- /.container-fluid -->
+                </nav>
+
+                <form class="row" id="myFormId2">
+                  <div class="col-lg-5">
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-addon">@</span>
+                      <input type="text" class="form-control" placeholder="請輸入" value="10"  name="test1">
+                    </div>
+                  </div><!-- /.col-lg-5 -->
+                  <div class="col-lg-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">@</span>
+                      <input type="text" class="form-control" placeholder="請輸入" name="test2">
+                    </div>
+                  </div><!-- /.col-lg-4 -->
+                  <div class="col-lg-3">
+                    <div class="input-group input-group-sm">
+                      <span class="input-group-addon">@</span>
+                      <input type="text" class="form-control" placeholder="請輸入" name="test3">
+                    </div>
+                  </div><!-- /.col-lg-3 -->
+                </form><!-- /.row -->
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="checkbox">
+                      </span>
+                      <span class="input-group-addon">
+                        <input type="checkbox">
+                      </span>
+                      <span class="input-group-addon">
+                        <input type="checkbox" checked>
+                      </span>
+                      <input type="text" class="form-control">
+                    </div><!-- /input-group -->
+                  </div><!-- /.col-lg-6 -->
+                  <div class="col-lg-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <input type="radio" name="radgrp1">
+                      </span>
+                      <span class="input-group-addon">
+                        <input type="radio" name="radgrp1" checked>
+                      </span>
+                      <span class="input-group-addon">
+                        <input type="radio" name="radgrp1">
+                      </span>
+                      <div class="input-group input-group-sm">
+                          <span class="input-group-addon">@</span>
+                          <input type="text" class="form-control" placeholder="請輸入"  name="test99">
+                      </div>
+                    </div><!-- /input-group -->
+                  </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-8">
+                       <div class="alert alert-success">
+                          <a href="#" class="alert-link">成功&nbsp;<span class="glyphicon glyphicon-ok"></span></a>
+                       </div>
+                    </div><!-- /.col-lg-4 -->
+                    <div class="col-lg-4">
+                       <div class="alert alert-danger">
+                         <a href="#" class="alert-link">失敗&nbsp;<span class="glyphicon glyphicon-remove"></span></a>
+                       </div>
+                    </div><!-- /.col-lg-4 -->
+                </div><!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <b style="color:#B22222;">FineUploader (Ajax 多檔案上傳)</b> 
+                        <div id="manual-fine-uploader">
+                        </div>
+                        <!--<button id="triggerUpload" style="display:none">
+                        </button>-->
+                        <button id="triggerUpload"  class="btn btn-danger dropdown-toggle" data-toggle="dropdown" >上傳 <span class="glyphicon glyphicon-hand-up"></span></button>
+                        <button id="btnClear"  class="btn btn-success dropdown-toggle" data-toggle="dropdown" >清空 <span class="glyphicon glyphicon-hand-up"></span></button>
+                    </div>
+                    <div class="col-lg-6">
+                       <div class="alert alert-danger">
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">Action <span class="glyphicon glyphicon-star"></span></button> 
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="btnClr">清空 <span class="glyphicon glyphicon-hand-right"></span></button> 
+                            <button class="btn btn-danger dropdown-toggle" data-toggle="dropdown" id="btnOk">送出 <span class="glyphicon glyphicon-hand-up"></span></button> 
+                            <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown" id="btnOk2">Xml2Json <span class="glyphicon glyphicon-hand-down"></span></button> 
+                            <button class="btn btn-success dropdown-toggle" data-toggle="dropdown" id="btnOk3">Json2 <span class="glyphicon glyphicon-hand-left"></span></button> 
+                            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" id="btnOk4">LinqJS <span class="glyphicon glyphicon-thumbs-up"></span></button> 
+                            <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown"  id="btnOk5">UrlJS <span class="glyphicon glyphicon-thumbs-down"></span></button> 
+                       </div>
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+            </div>
+        </div>
+        <div class="tab-pane" id="tab7">
+
+        </div>
+      </div>
+    </div>
+ 
+            <center>
+            <table >
+            <tr>
+                <td>
+                    <div id="panorama"  style="width:600px;height:375px;">
+                        <div class="panorama_preloader" style="margin: 0 auto;width:32px;top: 50%; margin-top: -16px;"><img src="http://skylightdev.net/panorama/img/loading.gif"></div>
+                        <div class="panorama_img"><img src="http://www.stereomaker.net/panorama/lr/lr/0219_l.jpg"</div>
+                        <div class="panorama_title"></div>
+                    </div>
+                 </td>
+                <td>
+                    <div id="panorama1" style="width:600px;height:375px;">
+                        <div class="panorama_preloader" style="margin: 0 auto;width:32px;top: 50%; margin-top: -16px;"><img src="http://skylightdev.net/panorama/img/loading.gif"></div>
+                        <div class="panorama_img"><img src="http://www.stereomaker.net/panorama/lr/lr/snow2_r.jpg" ></div>
+                        <div class="panorama_title"></div>
+                    </div>
+                 </td>
+            </tr>
+            <tr>
+                <td>    
+                    <div id="panorama2" style="width:600px;height:375px;">
+                        <div class="panorama_preloader" style="margin: 0 auto;width:32px;top: 50%; margin-top: -16px;"><img src="http://skylightdev.net/panorama/img/loading.gif"></div>
+                        <div class="panorama_img"><img src="http://www.stereomaker.net/panorama/lr/lr/pan%20pair_r.jpg" width="2642" height="375"></div>
+                        <div class="panorama_title"></div>
+                    </div>
+                </td>
+                <td>    
+                    <div id="panorama3" style="width:600px;height:375px;">
+                        <div class="panorama_preloader" style="margin: 0 auto;width:32px;top: 50%; margin-top: -16px;"><img src="http://skylightdev.net/panorama/img/loading.gif"></div>
+                        <div class="panorama_img"><img src="http://www.stereomaker.net/panorama/lr/lr/3dpano_02_l.jpg" width="2642" height="375"></div>
+                        <div class="panorama_title"></div>
+                    </div>
+                </td>
+            </tr>
+           </table>
+           </center>
+
+</body>
+</html>  

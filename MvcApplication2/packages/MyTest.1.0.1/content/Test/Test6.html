@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="https://sites.google.com/site/realilsticartist/panorama.css" />
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
+    <script type='text/javascript' src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+    <script type="text/javascript" src="http://skylightdev.net/panorama/jquery.panorama.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            
+            //START panorama            
+            $('#panorama').panorama({
+                speed: 500,
+                move: 500,
+                wheel: 2,
+                drag: 1,
+                attenuation: 3,
+                //viewport_width: 500,
+                // to display the true size of the image
+                //size:true,
+                fps: 60,
+                direction: 'left',
+                control_display: 'auto',
+                //auto_start: false,
+                loop_180: true
+            });
+
+            $('#panorama1').panorama({
+                speed: 500,
+                move: 500,
+                wheel: 2,
+                drag: 1,
+                attenuation: 3,
+                //viewport_width: 500,
+                // to display the true size of the image
+                //size:true,
+                fps: 60,
+                direction: 'left',
+                control_display: 'auto',
+                //auto_start: false,
+                loop_180: true
+            });
+             
+            //START panorama            
+            $('#panorama2').panorama({
+                speed: 500,
+                move: 500,
+                wheel: 2,
+                drag: 1,
+                attenuation: 3,
+                //viewport_width: 500,
+                // to display the true size of the image
+                //size:true,
+                fps: 60,
+                direction: 'left',
+                control_display: 'auto',
+                //auto_start: false,
+                loop_180: true
+            });
+
+            //START panorama            
+            $('#panorama3').panorama({
+                speed: 500,
+                move: 500,
+                wheel: 2,
+                drag: 1,
+                attenuation: 3,
+                //viewport_width: 500,
+                // to display the true size of the image
+                //size:true,
+                fps: 60,
+                direction: 'left',
+                control_display: 'auto',
+                //auto_start: false,
+                loop_180: true
+            });
+             
+        });
+    </script>    
+</head>
+<body>
+    <center>
+    <table >
+        <tr>
+            <td>
+                <div id="panorama"  style="width:600px;height:375px;">
+                    <div class="panorama_preloader" style="margin: 0 auto;width:32px;top: 50%; margin-top: -16px;"><img src="http://skylightdev.net/panorama/img/loading.gif"></div>
+                    <div class="panorama_img"><img src="http://www.stereomaker.net/panorama/lr/lr/0219_l.jpg"</div>
+                    <div class="panorama_title"></div>
+                </div>
+             </td>
+            <td>
+                <div id="panorama1" style="width:600px;height:375px;">
+                    <div class="panorama_preloader" style="margin: 0 auto;width:32px;top: 50%; margin-top: -16px;"><img src="http://skylightdev.net/panorama/img/loading.gif"></div>
+                    <div class="panorama_img"><img src="http://www.stereomaker.net/panorama/lr/lr/snow2_r.jpg" ></div>
+                    <div class="panorama_title"></div>
+                </div>
+             </td>
+        </tr>
+        <tr>
+            <td>    
+                <div id="panorama2" style="width:600px;height:375px;">
+                    <div class="panorama_preloader" style="margin: 0 auto;width:32px;top: 50%; margin-top: -16px;"><img src="http://skylightdev.net/panorama/img/loading.gif"></div>
+                    <div class="panorama_img"><img src="http://www.stereomaker.net/panorama/lr/lr/pan%20pair_r.jpg" width="2642" height="375"></div>
+                    <div class="panorama_title"></div>
+                </div>
+            </td>
+            <td>    
+                <div id="panorama3" style="width:600px;height:375px;">
+                    <div class="panorama_preloader" style="margin: 0 auto;width:32px;top: 50%; margin-top: -16px;"><img src="http://skylightdev.net/panorama/img/loading.gif"></div>
+                    <div class="panorama_img"><img src="http://www.stereomaker.net/panorama/lr/lr/3dpano_02_l.jpg" width="2642" height="375"></div>
+                    <div class="panorama_title"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    </center>
+
+   <!-- <table>
+        <tr>
+            <td>
+                <img src="http://www.stereomaker.net/panorama/lr/lr/0219_l.jpg" class="panorama" width="2642" height="375" />
+            </td>
+            <td>
+                <img src="http://www.stereomaker.net/panorama/lr/lr/snow2_r.jpg" class="panorama" width="2642" height="375" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="http://www.stereomaker.net/panorama/lr/lr/pan%20pair_r.jpg" class="panorama" width="2642" height="375" />
+            </td>
+            <td>
+                <img src="http://www.stereomaker.net/panorama/lr/lr/3dpano_02_l.jpg" class="panorama" width="2642" height="375" />
+            </td>
+        </tr>
+    </table>-->
+</div>
+</body>
+</html>
+

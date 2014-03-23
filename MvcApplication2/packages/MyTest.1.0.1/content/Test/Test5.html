@@ -1,0 +1,31 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Panorama</title>
+  <script type='text/javascript' src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://panorado.com/Download/Panorado_min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+      window.onload = function () {
+          Viewer = new PanoradoJS(document.getElementById("ViewerCanvas"));
+          Viewer.image = {
+              src: 'http://www.stereomaker.net/panorama/lr/lr/0219_l.jpg',
+              projection: 'flat'
+          };
+      }
+  </script>
+
+</head>
+
+<body>
+  <canvas id="ViewerCanvas" style="width:800px;height:450px">
+    Please update your browser for HTML5 support!
+  </canvas>
+
+
+</body>
+
+</html>
+
+

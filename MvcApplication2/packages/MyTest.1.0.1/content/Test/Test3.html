@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+      <script type='text/javascript' src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+      <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+      <script type='text/javascript' src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+      <link href="http://cdn.bootcss.com/file-uploader/3.7.0/fineuploader.css" rel="stylesheet"/>
+      <script src="http://cdn.bootcss.com/file-uploader/3.7.0/fineuploader.min.js"></script>
+
+      <script src="http://cdn.bootcss.com/Cookies.js/0.3.1/cookies.min.js"></script>
+
+      <script type="text/javascript">
+          $(function () {
+              var manualuploader = new qq.FineUploader({
+                  element: document.getElementById("manual-fine-uploader"),
+                  request: {
+                      endpoint: 'http://www.cnblogs.com//halou/p/?' + 'reqType=addReportImage'
+                  },
+                  //autoUpload: true,
+                  autoUpload: false,
+                  multiple: true,
+                  validation: {
+                      //allowedExtensions: ['jpeg', 'jpg', 'txt'],
+                      sizeLimit: 9999999 //bytes
+                  },
+                  text: {
+                      //uploadButton: '<i class="icon-plus icon-white"></i> 選擇檔案'
+                      uploadButton: '<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="btnOk2">選擇檔案 <span class="glyphicon glyphicon-hand-down"></span></button>'
+                  },
+                  callbacks: {
+                      onComplete: function (id, fileName, responseJSON) {
+                          //$(".qq-upload-list").html("");
+                          //reloadData
+                          //fetchShowImages(Cookies.get("resultReportId"));
+                      },
+                      onError: function (event, id, name, errorReason, xhrOrXdr) {
+                      },
+                  },
+                  debug: false
+              });
+
+              
+              document.getElementById('triggerUpload').onclick = function () {
+                  manualuploader.uploadStoredFiles();
+              };
+
+              document.getElementById('btnClear').onclick = function () {
+                  manualuploader.clearStoredFiles();
+              };
+          });
+      </script>
+</head>
+<body>
+    <div id="manual-fine-uploader">
+    </div>
+    <!--<button id="triggerUpload" style="display:none">
+    </button>-->
+    <button id="triggerUpload"  class="btn btn-danger dropdown-toggle" data-toggle="dropdown" >上傳檔案 <span class="glyphicon glyphicon-hand-up"></span></button>
+    <button id="btnClear"  class="btn btn-success dropdown-toggle" data-toggle="dropdown" >清空 <span class="glyphicon glyphicon-hand-up"></span></button>
+</body>
+</html>

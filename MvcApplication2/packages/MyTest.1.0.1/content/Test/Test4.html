@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!--<link rel="stylesheet" type="text/css" href="https://sites.google.com/site/realilsticartist/panorama.css" />-->
+    <link rel="stylesheet" type="text/css" href="./jquery.panorama.css" />
+
+    <!--<script type="text/javascript"  src="./jquery.js"></script>-->
+    <script type='text/javascript' src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+    
+
+    <script type="text/javascript"  src="./jquery.panorama.js"></script>
+    <!--<script src="http://panorado.com/Download/Panorado_min.js" type="text/javascript"></script>-->
+
+    <script type='text/javascript'>
+    /*     
+        $(document).ready(function () {
+            $("img.panorama").panorama({
+                viewport_width: 2642,
+                viewport_height: 375,
+                speed: 30000,
+                direction: 'right',
+                control_display: 'yes'
+            });
+        });
+    */    
+    </script>
+<style  type="text/css">
+	body {
+		background: #595959;
+		text-align: center;
+	}
+	h1 {
+		color: white;
+		margin-bottom: 2em;
+		font-family: Verdana;
+		font-weight: normal;
+		font-size: 25px;
+	}
+	#page {
+		text-align: center;
+		color: white;
+	}
+	#page a {
+		color: white;
+	}
+	#page .panorama-viewport {
+		border: 20px solid #414141;
+		margin-left: auto;
+		margin-right: auto;
+	}
+</style>
+</head>
+<body>
+<h1>jQuery simple panorama viewer</h1>
+
+<div id="page">
+	<p>
+		<a href="http://openstudio.fr/Un-viewer-de-panoramas-simple-en.html">download and online documentation</a>
+	</p>
+	
+	<!--<img src="atelier.jpg" class="panorama" width="2642" height="375" />-->
+    <table>
+        <tr>
+            <td>
+                <img src="http://www.stereomaker.net/panorama/lr/lr/0219_l.jpg" class="panorama" width="2642" height="375" />
+            </td>
+            <td>
+                <img src="http://www.stereomaker.net/panorama/lr/lr/snow2_r.jpg" class="panorama" width="2642" height="375" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="http://www.stereomaker.net/panorama/lr/lr/pan%20pair_r.jpg" class="panorama" width="2642" height="375" />
+            </td>
+            <td>
+                <img src="http://www.stereomaker.net/panorama/lr/lr/3dpano_02_l.jpg" class="panorama" width="2642" height="375" />
+            </td>
+        </tr>
+    </table>
+    <!-- <img src="atelier.jpg" class="Mypanorama" />-->
+
+
+	
+</div>
+</body>
+</html>
