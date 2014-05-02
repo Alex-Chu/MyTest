@@ -1,0 +1,745 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title id="Test">Test Kendo UI</title>
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="-1">
+
+    <!-- Bootstrap CSS-->
+    <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+    @*<link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" />*@
+    <!-- Glyphicon CSS-->
+    <link rel="stylesheet" href="../Content/Glyphicon/css/glyphicons.css">
+    <!-- Kendo Core CSS-->
+    <link href="@Url.Content("~/Content/kendo/2014.1.318/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+    @*<link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.common.min.css">*@
+    <!-- Kendo Theme CSS-->
+    <link href="@Url.Content("~/Content/kendo/2014.1.318/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+    @* <link rel="stylesheet" type="text/css" href="http://cdn.kendostatic.com/2014.1.318/styles/kendo.black.min.css">*@
+
+    <!--jQuery JS-->
+    <script src="@Url.Content("~/Scripts/kendo/2014.1.318/jquery.min.js")" type="text/javascript"></script>
+    @* <script type='text/javascript' src="http://code.jquery.com/jquery-1.9.1.min.js"></script>--%>*@
+    <!--Bootstrap JS-->
+    @*<script type='text/javascript' src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>*@
+    <!-- Glyphicon JS-->
+    @*<script src="@Url.Content("~/Scripts/Glyphicon/modernizr.js")" type="text/javascript"></script>*@
+    <!-- Kendo Core JS-->
+    <script src="@Url.Content("~/Scripts/kendo/2014.1.318/kendo.web.min.js")" type="text/javascript"></script>
+    @* <script type='text/javascript' src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js")"></script>*@
+    <!-- Kendo 多國語文-Culture JS -->
+    <script src="@Url.Content("~/Scripts/kendo/2014.1.318/cultures/kendo.culture.zh-CHT.min.js")" type="text/javascript"></script>
+    @* <script src="@Url.Content("~/Scripts/kendo/2014.1.318/cultures/kendo.culture.zh-CN.min.js")" type="text/javascript"></script>*@
+    @* <script src="http://cdn.kendostatic.com/2014.1.318/js/cultures/kendo.culture.zh-CN.min.js")" type="text/javascript"></script>*@
+    @* <script src="http://cdn.kendostatic.com/2014.1.318/js/cultures/kendo.culture.zh-CHT.min.js")" type="text/javascript"></script>*@
+    <!-- Kendo 多國語文-Language packs JS -->
+    <script src="@Url.Content("~/Scripts/kendo/2014.1.318/lang/kendo.zh-CHT.js")" type="text/javascript"></script>
+    @* <script src="@Url.Content("~/Scripts/kendo/2014.1.318/lang/kendo.zh-CN.js")"></script>*@
+
+    <style>
+        body {
+            font-size: 9pt;
+        }
+
+        #dvGrid {
+            width: 500px;
+        }
+
+        span.hi-lite {
+            color: red;
+        }
+
+        #dvGrid th.k-header {
+            text-align: center;
+        }
+    </style>
+    <script>
+        //===============================================================================================================================================
+ 
+        //====================================================================================================================================
+        // *** Editor
+        function dateTimeEditor(container, options) {
+            $('<input data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field + '" data-format="' + 'yyyy.MM.dd HH:mm:ss' + '"/>') // DateTime
+            //$('<input data-text-field="' + options.field + '" data-value-field="' + options.field + '" data-bind="value:' + options.field + '" data-format="' + 'yyyy/MM/dd' + '"/>') //Date
+            .appendTo(container)
+            .kendoDateTimePicker({}); // DateTime
+            //.kendoDatePicker({}) ;  // Only Date
+            //.attr("readonly", true) ; // ReadOnly
+        }
+        //===============================================================================================================================================
+        var MyData = null;
+
+        $(function () {
+            //====================================================================================================================================
+            // *** 多國語文設定
+            //kendo.culture("en-US");
+            //kendo.culture("zh-CN");
+            kendo.culture("zh-CHT");
+            //====================================================================================================================================
+            // *** Model
+            var albumModel = {
+                id: "UserNo",
+                fields: {
+                    SerNo: {
+                        type: "string",
+                        editable: false,//若設為True，此欄位資料便可編輯 
+                        nullable: true,//若設為False，則此欄位資料不可為Null 
+                        defaultValue: "",
+                    },
+                    RecNo: {
+                        type: "string",
+                        editable: false,//若設為True，此欄位資料便可編輯 
+                        nullable: true,//若設為False，則此欄位資料不可為Null 
+                        defaultValue: "",
+                    },
+                    UserNo: {
+                        type: "string",
+                        editable: false,//若設為True，此欄位資料便可編輯 
+                        nullable: false,//若設為False，則此欄位資料不可為Null 
+                        defaultValue: " ",
+                    },
+                    UserName: {
+                        type: "string",
+                        editable: true,//若設為True，此欄位資料便可編輯 
+                        nullable: false,//若設為False，則此欄位資料不可為Null 
+                        defaultValue: "測試",
+                        validation: {
+                            required: { message: "姓名不可為空值" }
+                        }
+                    },
+                    VIP: {
+                        type: "boolean",
+                        editable: true,//若設為True，此欄位資料便可編輯 
+                        nullable: false,//若設為False，則此欄位資料不可為Null 
+                        defaultValue: false
+                    },
+                    RegDate: {
+                        type: "date",
+                        editable: true,//若設為True，此欄位資料便可編輯 
+                        nullable: false,//若設為False，則此欄位資料不可為Null
+                        //defaultValue: kendo.parseDate("2010-03-07T12:44:07Z")
+                        //defaultValue: kendo.parseDate("2000-10-10")
+                        defaultValue: new Date()
+                    },
+                    Points: {
+                        type: "number",
+                        editable: true,//若設為True，此欄位資料便可編輯 
+                        nullable: false,//若設為False，則此欄位資料不可為Null
+                        defaultValue: 0,
+                        validation: {
+                            min: 0,
+                            max: 9000.00
+                        }
+                    }
+                }
+            };
+            //-----------------------------------------------------------------------------------------------------------------------
+            // *** DataSource
+            var dataSrc = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: '@("/" + ViewContext.RouteData.Values["controller"] + "/" + ViewContext.RouteData.Values["action"]+"?Act=R")',
+                        type: "POST",
+                        dataType: "json",
+                        //headers: {
+                        //   DataServiceVersion: "2.0",
+                        //   MaxDataServiceVersion: "2.0"
+                        //}
+                        data: {
+                            //額外傳至後方的參數
+                            keywd: function () {
+                                return $("#tKeyword").val();
+                            },
+                            dteJoin_B: function () {
+                                return $("#dteJoin_B").val();
+                            },
+                            dteJoin_E: function () {
+                                return $("#dteJoin_E").val();
+                            }
+                        },
+                        complete: function (response, status) {
+                            var _Msg = '';
+
+                            if (status == 'success' && $.parseJSON(response.responseText).errors == '') {
+                                 //_Msg = '查詢成功 (' + status + ')\nstatus=' + response.status + '\nstatusText=' + response.statusText + '\nresponseText=' + response.responseText;
+                            }
+                            else {
+                                try{
+                                    _Msg = '查詢失敗 (' + status + ')\nstatus=' + response.status + '\nstatusText=' + response.statusText + '\nresponseText=' + $.parseJSON(response.responseText).ResultMsg;
+                                }
+                                catch (e) {
+                                    _Msg = '查詢失敗';
+                                }
+                            }
+
+                            if (_Msg != '') alert(_Msg);
+                            $("#dvGrid").slideUp();
+                            $("#dvGrid").slideDown();
+                        },
+                        cache: false
+                    },
+                    create: {
+                        url: '@("/" + ViewContext.RouteData.Values["controller"] + "/" + ViewContext.RouteData.Values["action"]+"?Act=C")',
+                        type: "POST",
+                        dataType: "json",
+                        //headers: {
+                        //   DataServiceVersion: "2.0",
+                        //   MaxDataServiceVersion: "2.0"
+                        //}
+                        data: {
+                            page: function () {
+                                return dataSrc._page;
+                            },
+                            pageSize: function () {
+                                return dataSrc._pageSize;
+                            },
+                            skip: function () {
+                                return dataSrc._skip;
+                            },
+                            take: function () {
+                                return dataSrc._take;
+                            },
+                        },
+                        complete: function (response, status) {
+                            var _Msg = '';
+                            
+                            if (status == 'success' && $.parseJSON(response.responseText).errors == '') {
+                                $("#dvGrid").data("kendoGrid").dataSource.read();
+                                _Msg = '新增成功 (' + status + ')\nstatus=' + response.status + '\nstatusText=' + response.statusText + '\nresponseText=' + response.responseText;
+                            }
+                            else {
+                                try {
+                                    _Msg = '新增失敗 (' + status + ')\nstatus=' + response.status + '\nstatusText=' + response.statusText + '\nresponseText=' + $.parseJSON(response.responseText).ResultMsg;
+                                }
+                                catch (e) {
+                                    _Msg = '新增失敗';
+                                }
+                            }
+
+                            if (_Msg != '') alert(_Msg);
+                       }
+                    },
+                    update: {
+                        url: '@("/" + ViewContext.RouteData.Values["controller"] + "/" + ViewContext.RouteData.Values["action"]+"?Act=U")',
+                        type: "POST",
+                        dataType: "json",
+                        //headers: {
+                        //   DataServiceVersion: "2.0",
+                        //   MaxDataServiceVersion: "2.0"
+                        //}
+                        data: {
+                            page: function () {
+                                return dataSrc._page;
+                            },
+                            pageSize: function () {
+                                return dataSrc._pageSize;
+                            },
+                            skip: function () {
+                                return dataSrc._skip;
+                            },
+                            take: function () {
+                                return dataSrc._take;
+                            },
+                        },
+                        complete: function (response, status) {
+                            var _Msg = '';
+                            if (status == 'success' && $.parseJSON(response.responseText).errors == '') {
+                                 _Msg = '修改成功 (' + status + ')\nstatus=' + response.status + '\nstatusText=' + response.statusText + '\nresponseText=' + response.responseText;
+                            }
+                            else {
+                                try {
+                                    _Msg = '修改失敗 (' + status + ')\nstatus=' + response.status + '\nstatusText=' + response.statusText + '\nresponseText=' + $.parseJSON(response.responseText).ResultMsg;
+                                }
+                                catch (e) {
+                                    _Msg = '修改失敗';
+                                }
+                            }
+
+                            if (_Msg != '') alert(_Msg);
+                        }
+                    },
+                    destroy: {
+                        url: '@("/" + ViewContext.RouteData.Values["controller"] + "/" + ViewContext.RouteData.Values["action"]+"?Act=D")',
+                        type: "POST",
+                        //headers: {
+                        //   DataServiceVersion: "2.0",
+                        //   MaxDataServiceVersion: "2.0"
+                        //},
+                        dataType: "json",
+                        data: {
+                            page: function () {
+                                return dataSrc._page;
+                            },
+                            pageSize: function () {
+                                return dataSrc._pageSize;
+                            },
+                            skip: function () {
+                                return dataSrc._skip;
+                            },
+                            take: function () {
+                                return dataSrc._take;
+                            },
+                        },
+                        complete: function (response, status) {
+                            var _Msg = '';
+                            if (status == 'success' && $.parseJSON(response.responseText).errors == '') {
+                                var TotPage = 0, CurPage = 0, CurRow = 0;
+                                try {
+                                    CurRow = $('#dvGrid').data('kendoGrid')._data.length;
+                                    CurPage = $('#dvGrid').data('kendoGrid').dataSource.page();
+                                    TotPage = Math.ceil($('#dvGrid').data('kendoGrid').dataSource._total / $('#dvGrid').data('kendoGrid').dataSource._pageSize);
+                                    CurPage = Math.min(TotPage, CurPage);
+                                }
+                                catch (e) {
+                                    CurPage = 1;
+                                }
+                                $('#dvGrid').data('kendoGrid').dataSource.page(CurPage);
+
+                                 _Msg = '刪除成功 (' + status + ')\nstatus=' + response.status + '\nstatusText=' + response.statusText + '\nresponseText=' + response.responseText;
+                            }
+                            else {
+                                $('#dvGrid').data('kendoGrid').cancelChanges();
+                                $('#dvGrid').data('kendoGrid').dataSource.read();
+
+                                try {
+                                    _Msg = '刪除失敗 (' + status + ')\nstatus=' + response.status + '\nstatusText=' + response.statusText + '\nresponseText=' + $.parseJSON(response.responseText).ResultMsg;
+                                }
+                                catch (e) {
+                                    _Msg = '刪除失敗';
+                                }
+                            }
+                           
+                            if(_Msg != '') alert(_Msg);
+                        }
+                    },
+                    parameterMap: function (data, operation) {
+                        //return kendo.stringify(data);
+                        if (operation != 'read') {
+                            data.RegDate = kendo.toString(data.RegDate, "yyyy/MM/dd HH:mm:ss.fff")
+                            return data;
+                        }
+                        else {
+                            return data;
+                        }
+                    }
+                },
+                schema: {
+                    //取出資料陣列
+                    data: function (d) {
+                        return d.Data;
+                    },
+                    //取出資料總筆數(計算頁數用)
+                    total: function (d) { return d.TotalCount; },
+                    model: albumModel,
+                    parse: function (response) {
+                        $.each(response, function (idx, elem) {
+                            if (elem) {
+                                if ($.isArray(elem) && elem.length && elem.length > 0) {
+                                    $.each(elem, function (idx2, elem2) {
+                                        if (elem2.RegDate && typeof elem2.RegDate === "string") {
+                                            elem2.RegDate = toDate(elem2.RegDate);
+                                        }
+                                    });
+                                }
+
+                                if (elem.RegDate && typeof elem.RegDate === "string") {
+                                    //elem.RegDate = kendo.parseDate(elem.RegDate);
+                                    //elem.RegDate = kendo.parseDate(elem.RegDate, "yyyy-MM-ddTHH:mm:ss.fffZ");
+                                    elem.RegDate = toDate(elem.RegDate);
+                                }
+                            }
+                        });
+                        return response;
+                    },
+                    errors: function (d) {
+                        return d.errors;
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status == "customerror") {
+                        if (xhr.errors && xhr.errors.indexOf('Create') >= 0 || xhr.errors.indexOf('Update') >= 0) {
+                            $('#dvGrid').data('kendoGrid').one('dataBinding', function (e) {
+                                e.preventDefault();
+                            })
+                        }
+                    }
+                    else {
+                        xhr.preventDefault();
+                    }
+                },
+                change: function (e) {
+                    //alert("Change");
+                },
+                requestStart: function (e) {
+                    //alert("Request Start");
+                },
+                requestEnd: function (e) {
+                    try {
+                        if (e.type == 'read') {
+                            var _MyGrid, _MyCnt = 0;
+
+                            try {
+                                _MyGrid = e.sender;
+                                _MyCnt = parseInt(_MyGrid.pageSize()) * (parseInt(_MyGrid.page()) - 1);
+                            }
+                            catch (e3) {
+                            }
+
+                            $.each(e.response.Data, function (idx, elm) {
+                                elm.SerNo = _MyCnt + idx + 1;
+                                elm.RecNo = idx + 1;
+                            });
+                        }
+                    }
+                    catch (e2) {
+                    }
+                
+                },
+                //batch: true,
+                pageSize: 5,
+                serverFiltering: true,
+                serverPaging: true,
+                serverSorting: true
+            });
+            //JSON日期轉換
+            var dateRegExp = /^\/Date\((.*?)\)\/$/;
+            window.toDate = function (value) {
+                var date = dateRegExp.exec(value);
+                return new Date(parseInt(date[1]));
+            }
+            //-----------------------------------------------------------------------------------------------------------------------
+            // *** Grid
+            $("#dvGrid").kendoGrid({
+                //height: 350, 
+                //width: 560, 
+                dataSource: dataSrc,
+                //autoBind: false,
+                filterable: {
+                    extra: false,
+                },
+                columns: [
+                    {
+                        field: "SerNo",
+                        title: "序號",
+                        width: 90,
+                        headerAttributes: {
+                            style: "text-align:center"
+                        },
+                        attributes: {
+                            //"class": "table-cell",
+                            style: "text-align:center"
+
+                        }
+                        , filterable: false
+                        , sortable: false
+                    },
+                    {
+                        field: "RecNo",
+                        title: "行號",
+                        width: 90,
+                        headerAttributes: {
+                            style: "text-align:center"
+                        },
+                        attributes: {
+                            //"class": "table-cell",
+                            style: "text-align:center"
+
+                        }
+                        , filterable: false
+                        , sortable: false
+                    },
+                    {
+                        field: "UserNo", title: "會員編號",
+                        //, width: "100px"
+                        headerAttributes: {
+                            style: "text-align:center"
+                        },
+                        attributes: {
+                            //"class": "table-cell",
+                            style: "text-align:center"
+
+                        }
+                        , template: "<a style='color:white;' href='javascript:alert(\"#= UserNo #\")'> #= UserNo # </a>"
+                        , filterable: false
+                        //, sortable: false
+                    },
+                    {
+                        field: "UserName", title: "會員名稱",
+                        template: '#= "<span class=\\"u-name\\">" + UserName + "</span>" #'
+                        //, width: "100px"
+                        , filterable: true
+                    },
+                    {
+                        field: "RegDate", title: "加入日期",
+                        //template: '#= kendo.toString(RegDate, "yyyy.MM.dd HH:mm:ss.fff")#' // DateTime
+                        template: '#= kendo.toString(RegDate, "yyyy.MM.dd HH:mm:ss")#'       // DateTime
+                        //template: '#= kendo.toString(RegDate, "yyyy.MM.dd")#'              // Date
+                        //, width: "100px"
+                        , headerAttributes: {
+                            style: "text-align:center"
+                        },
+                        attributes: {
+                            //"class": "table-cell",
+                            style: "text-align:center"
+
+                        },
+                        editor: dateTimeEditor
+                        , filterable: false
+                    },
+                    {
+                        field: "Points", title: "累積點數"
+                        //, width: "100px"
+                       , headerAttributes: {
+                           style: "text-align:center"
+                       },
+                        attributes: {
+                            //"class": "table-cell",
+                            style: "text-align:right",
+                        }
+                        , filterable: false
+                    },
+                    {
+                        field: "VIP"
+                        , title: "專屬會員(VIP)"
+                        //, width: "100px"
+                       , headerAttributes: {
+                           style: "text-align:center"
+                       },
+                        attributes: {
+                            //class:"ob-fld-boolean",
+                            style: "text-align:center"
+                        }
+                        , filterable: false
+                        , template: "<input type=\"checkbox\" name=\"VIP\" #= VIP?'checked':''  #  disabled='disabled'   />"
+                    },
+                    {
+                        command: [
+                            {
+                                className: "btn-edit",
+                                name: "edit",
+                                text: { edit: "編輯", update: "儲存", cancel: "取消" }
+                            },
+                            { className: "btn-destroy", name: "destroy", text: "刪除" }
+                        ],
+                        title: "&nbsp;",
+                        //width: 160,
+                        attributes:
+                            {
+                                "class": "table-cell",
+                                style: "text-align:center"
+
+                            },
+                    }
+                ],
+                editable: {
+                    confirmation: "您確定要刪除嗎 ?",
+                    mode: "popup"
+                },
+                edit: function (e) {
+                    var editWindow = e.container.data("kendoWindow");
+
+                    if (e.model.isNew()) {
+                        e.container.data("kendoWindow").title('[  --- 資料維護 (新增) ---  ]');
+                    }
+                    else {
+                        e.container.data("kendoWindow").title('[  --- 資料維護 (修改) ---  ]');
+                    }
+                   
+                    try {
+                        e.model.dirty = true;
+                    }
+                    catch (e) {
+                    }
+                },
+                 
+                //toolbar: ["create"],
+                toolbar: [{ className: "btn-create", name: "create", text: "新增" }],
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                resizable: true,
+                scrollable: false,
+                selectable: true,
+                dataBinding: function (e) {
+                    /*
+                    alert(e.items.MyData);
+                   */
+                },
+                dataBound: function (e) {
+                    var kw = $("#tKeyword").val();
+                    //若有設關鍵字，做Highlight處理
+                    if (kw.length > 0) {
+                        var re = new RegExp(kw, "g");
+                        $(".u-name").each(function () {
+                            var $td = $(this);
+                            $td.html($td.text()
+                           .replace(re, "<span class='hi-lite'>$&</span>"));
+                        });
+                    }
+                },
+                cancel: function (e) {
+                    //e.preventDefault()
+                 }
+            }); // End-$("#dvGrid").kendoGrid()
+            //====================================================================================================================================
+            // *** 查詢條件
+            // *** 加入日期 (起~迄)
+            $('#dteJoin_B')
+            //.val(kendo.toString(new Date(), "yyyy/MM/dd HH:mm:ss.fff"))
+            //.val(kendo.toString(new Date(), "yyyy/MM/dd HH:mm:ss"))
+            //.val(kendo.toString(new Date(), "yyyy/MM/dd"))
+            .kendoDateTimePicker({ format: 'yyyy/MM/dd HH:mm:ss' })
+            .kendoMaskedTextBox({
+                mask: "0000/00/00 00:00:00",
+                //rules: {
+                //    "e": /[02468]/
+                //}
+            })
+            ;
+
+            $('#dteJoin_E')
+            //.val(kendo.toString(new Date(), "yyyy/MM/dd HH:mm:ss.fff"))
+            .val(kendo.toString(new Date(), "yyyy/MM/dd HH:mm:ss"))
+            //.val(kendo.toString(new Date(), "yyyy/MM/dd"))
+            .kendoDateTimePicker({ format: 'yyyy/MM/dd HH:mm:ss' })
+            .kendoMaskedTextBox({
+                mask: "0000/00/00 00:00:00",
+                //rules: {
+                //    "e": /[02468]/
+                //}
+            })
+            ;
+            //-----------------------------------------------------------------------------------------------------------------------
+            // *** 查詢鈕
+            $("#bQuery").click(function () {
+                //要求資料來源重新讀取(並指定切至第一頁)
+                $('#dvGrid').data('kendoGrid').dataSource.page(1);
+                //dataSrc.read({ page: 1, skip: 0 });
+                //Grid重新顯示資料
+                //$("#dvGrid").data("kendoGrid").refresh();
+            });
+            //-----------------------------------------------------------------------------------------------------------------------
+            // *** 列印鈕
+            $("#bPrint").click(function () {
+                var _MyPrnBlock;
+                //--------------------------------------------------------------------------------------------
+                // * Confirm
+                /*
+                if(!confirm('您確定要列印 ?'))
+                {
+                    return;
+                }
+                */
+                //--------------------------------------------------------------------------------------------
+                // * Init
+                _MyPrnBlock = document.getElementById('_MyPrnBlock');
+                if (_MyPrnBlock) {
+
+                }
+                else {
+                    _MyPrnBlock = document.createElement("div");
+                    _MyPrnBlock.id = '_MyPrnBlock';
+                    //_MyPrnBlock.class = '_MyPrnBlock';
+                    document.body.appendChild(_MyPrnBlock);
+                }
+                //--------------------------------------------------------------------------------------------
+                // * Process
+                $("#_MyPrnBlock").empty();
+
+                var _MyPrnContent = '';
+                //_MyPrnContent = "<center>" + document.getElementById('divHeader').innerHTML + "</center>" + _MyPrnContent;
+                //_MyPrnContent = "" + document.getElementById('divCond').innerHTML + "" + _MyPrnContent;
+                _MyPrnContent += "<center><b><font color='black'>" + "--- 查詢結果 ---" + "</font></center></b><hr/>";
+                try {
+                    $('#dvGrid').data('kendoGrid').hideColumn($('#dvGrid').data('kendoGrid').columns.length - 1);
+                }
+                catch (e) {
+                }
+                _MyPrnContent += "" + "<table style=\"width: 100%;\"" + $('#dvGrid').data('kendoGrid').table[0].innerHTML + "</table>";
+                _MyPrnContent += "<br/><br/><center><div class='divMyButtons'>";
+                _MyPrnContent += "<input type='button'  class='btn btn-success btn-sm' value='返回' onclick=\"$('#_MyPrnBlock').hide(); try{$('#dvGrid').data('kendoGrid').showColumn($('#dvGrid').data('kendoGrid').columns.length-1);}catch(e){} $('.divOrig').show();\" />";
+                _MyPrnContent += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                _MyPrnContent += "<input type='button'  class='btn btn-danger btn-sm' value='列印' onclick=\"$('.divMyButtons').hide();window.print();$('#_MyPrnBlock').hide(); try{$('#dvGrid').data('kendoGrid').showColumn($('#dvGrid').data('kendoGrid').columns.length-1);}catch(e){} $('.divOrig').show();\" />";
+                _MyPrnContent += "</div></center>";
+
+                $("#_MyPrnBlock").html(_MyPrnContent);
+                //--------------------------------------
+                // * Finalize (預覽列印)
+                $('.divOrig').hide();
+                $("#_MyPrnBlock").show();
+                //--------------------------------------------------------------------------------------------
+            });
+            //====================================================================================================================================
+        }); // End-$(function (){})
+        //===============================================================================================================================================
+    </script>
+</head>
+<body>
+ <div class="divOrig">
+    <center>
+      <b style="color:#B22222;font-size:20px;">--- KendoUI ---</b>
+      <br />
+      <b style="color:blue;">(CRUD + 篩選\排序\分頁)</b>
+     <br/>
+     <b style="color:blue;">(ASP.MVC)</b>
+     <!--<br/>-->
+    @* <b style="color:black;">\</b>
+     <b style="color:blue;">ASPX)</b>*@
+    </center>
+
+    <hr />
+
+    <form class="form-inline" style="padding: 0px;border:0px;margin:0px;">
+    <div style="padding: 0px;border:0px;margin:0px; width: 100%" class="row" >
+        <div class="row">                                                                                           @*BootStrap Layout*@
+          <div class="col-lg-12">
+            <div class="input-append">
+              &nbsp;&nbsp;&nbsp;
+              <b style="color: #FF1493;">
+                  <span class="glyphicon glyphicon-star"></span> @*BootStrap Icon*@
+                  <span class="glyphicons dashboard"  style="font-size: 20px;"></span>                                @* glyphicon Icon*@
+                  <span class="glyphicons star" ></span>                                                              @* glyphicon Icon*@
+                  &nbsp;會員名稱: 
+              </b>
+              <input type="text" id="tKeyword" class="form-control" placeholder="請輸入"  />
+
+              &nbsp;&nbsp;&nbsp;
+              <b style="color: #FF1493;">
+                  <span class="glyphicons heart_empty" ></span>                                                       @* glyphicon Icon*@
+                  <span class="glyphicons birthday_cake"  style="font-size: 20px;"></span>                            @* glyphicon Icon*@
+                  <span class="glyphicons heart_empty" ></span>                                                       @* glyphicon Icon*@
+                  &nbsp;加入日期: 
+              </b>
+              <input type="text" id="dteJoin_B" class="form-control" placeholder="請輸入"  />
+              &nbsp;~&nbsp;
+              <input type="text" id="dteJoin_E" class="form-control" placeholder="請輸入"  />
+
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="button" class="btn btn-primary btn-sm" value="查詢" id="bQuery" /> 
+              <span class="glyphicon glyphicon-search" style="color: #FF1493;"></span>                                @*BootStrap Icon*@
+
+              &nbsp;&nbsp;&nbsp;
+              <input type="button" class="btn btn-primary btn-sm" value="列印" id="bPrint" />
+              <span class="glyphicons print"  style="font-size: 20px;vertical-align:middle;color: #FF1493;"></span>
+            </div>
+         </div>
+@*         <div class="col-lg-2">
+            <div class="input-append">
+              &nbsp;
+            </div>
+         </div>*@
+        </div>
+    </div>
+    <div id="dvGrid" style="width: 100%;"></div>
+    </form>
+ </div>
+</body>
+</html>
